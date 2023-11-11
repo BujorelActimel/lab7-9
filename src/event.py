@@ -9,6 +9,12 @@ class Event:
         self.time = time
         self.description = description
         self.guests = set() # set of guest id's
+
+    def __str__(self):
+        return f"{self.getEventId()}: {self.getEventDate()}"
+
+    def __repr__(self):
+        return str(self)
     
     def getEventId(self):
         return self.eventId

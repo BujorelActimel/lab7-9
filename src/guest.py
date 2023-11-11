@@ -7,7 +7,13 @@ class Guest:
         self.name = name
         self.address = address
         self.events = set() # set of event id's
-    
+
+    def __str__(self):
+        return f"{self.getGuestId()}: {self.getGuestName()}"
+
+    def __repr__(self):
+        return str(self)
+
     def getGuestId(self):
         return self.guestId
     
