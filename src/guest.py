@@ -9,7 +9,7 @@ class Guest:
         self.events = set() # set of event id's
 
     def __str__(self):
-        return f"{self.getGuestId()}: {self.getGuestName()}"
+        return f"{self.getGuestName()}: {self.getGuestAddress()}"
 
     def __repr__(self):
         return str(self)

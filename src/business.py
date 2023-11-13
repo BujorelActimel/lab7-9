@@ -8,6 +8,9 @@ all_guests = []
 all_events = []
 
 def execute(command: list):
+    if not command:
+        return
+
     match command[0]:
         case "adauga":
             if command[1] == "eveniment":

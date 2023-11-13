@@ -11,7 +11,7 @@ class Event:
         self.guests = set() # set of guest id's
 
     def __str__(self):
-        return f"{self.getEventId()}: {self.getEventDate()}"
+        return f"{self.getEventDescription()}: {self.getEventDate()}, {self.getEventTime()}"
 
     def __repr__(self):
         return str(self)
