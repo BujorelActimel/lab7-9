@@ -1,8 +1,8 @@
 import os
+import sys
 from datetime import date, time
 
 succes_messages = [
-    "Enter",
     "Evenimentul a fost adaugat cu succes",
     "Invitatul a fost adaugat cu succes",
     "bye bye",
@@ -30,6 +30,10 @@ def print_menu():
 
 def get_command():
     return input(">>> ").split(maxsplit=4)
+
+
+def debug(guest_list: list, event_list: list):
+    print(guest_list, event_list, sep="\n")
 
 
 def validate_command(command: list):
@@ -122,3 +126,33 @@ def valid_description(input_description: str):
         return input_description[0] == input_description[-1] == "'"
     else:
         return False
+
+
+def extract_date(command: list):
+    year, month, day = list(map(int, command[2].split("-")))
+    return date(year, month, day)
+
+
+def extract_time(command: list):
+    hour, minute = list(map(int, command[3].split(":")))
+    return time(hour, minute)
+
+
+def extract_description(command: list):
+    event_description = ""
+    if len(command) == 5:
+        event_description = command[4]
+    return event_description
+
+
+def extract_name(command: list):
+    return command[2]
+
+
+def extract_address(command: list):
+    return " ".join(command[3:])
+
+
+def exit():
+    clear()    
+    sys.exit("Bye bye")
