@@ -34,4 +34,3 @@ class Guest:
 
     def registerToEvent(self, event: "Event"):
         self.events.add(event.getEventId())
-        event.registerGuest(self)

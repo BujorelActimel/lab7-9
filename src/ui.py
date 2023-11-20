@@ -2,16 +2,12 @@ import os
 import sys
 from datetime import date, time
 
-succes_messages = [
-    "Evenimentul a fost adaugat cu succes",
-    "Invitatul a fost adaugat cu succes",
-    "bye bye",
-    "debug",
-]
-
-
 def clear():
     os.system("cls")
+
+
+def enter(msg):
+    input(f"{msg}\nPress Enter to continue")
 
 
 def print_menu():
@@ -32,10 +28,6 @@ def get_command():
     return input(">>> ").split(maxsplit=4)
 
 
-def debug(guest_list: list, event_list: list):
-    print(guest_list, event_list, sep="\n")
-
-
 def validate_command(command: list):
     valid_commands = [
         "adauga", 
@@ -48,46 +40,59 @@ def validate_command(command: list):
         "exit",
         "debug",
     ]
+
     if len(command) == 0:
-        return "Enter"
+        return
 
     if len(command) < 3 and command[0] not in valid_commands:
-        return "Prea putine argumente"
+        raise ValueError("Prea putine argumente")
 
     if command[0] not in valid_commands:
-        return "Primul argument este invalid"
+        raise ValueError("Primul argument este invalid")
 
     match command[0]:
         case "adauga":
             if command[1] == "eveniment":
                 if len(command) < 4:
-                    return "Prea putine argumente"
+                    raise ValueError("Prea putine argumente")
 
                 if not valid_date(command[2]):
-                    return "Data evenimentului este invalida"
+                    raise ValueError("Data evenimentului este invalida")
 
                 if not valid_time(command[3]):
-                    return "Timpul evenimentului este invalid"
+                    raise ValueError("Timpul evenimentului este invalid")
 
                 if len(command) == 5 and not valid_description(command[4]):
-                    return "Descrierea evenimentului este invalida"
+                    raise ValueError("Descrierea evenimentului este invalida")
                 
-                return "Evenimentul a fost adaugat cu succes"
+                enter("Evenimentul a fost adaugat cu succes")
             
             elif command[1] == "invitat":
                 if len(command) < 4:
-                    return "Prea putine argumente"
+                    raise ValueError("Prea putine argumente")
 
-                return "Invitatul a fost adaugat cu succes"
+                enter("Invitatul a fost adaugat cu succes")
 
             else:
-                return "Al doilea argument este invalid"
-        
+                raise ValueError("Al doilea argument este invalid")
+
+        case "inscrie":
+            if len(command) < 3:
+                raise ValueError("Prea putine argumente")
+            
+            if type(command[1]) != str:
+                raise ValueError("Primul argument este invalid")
+
+            if type(command[2]) != str:
+                raise ValueError("Al doilea argument este invalid")
+
+            command[2]
+
         case "exit":
-            return "bye bye"
+            pass
 
         case "debug":
-            return "debug"
+            pass
 
 
 def valid_date(input_date: str):
