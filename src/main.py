@@ -27,6 +27,13 @@ def main():
                         
                         elif command[1] == "invitat":
                             add_guest(extract_name(command), extract_address(command), all_guests)
+                        
+                        elif command[1] == "random":
+                            if command[2] == "invitat":
+                                add_random_guest(all_guests)
+                            elif command[2] == "eveniment":
+                                add_random_event(all_events)
+
                     
                     case "sterge":
                         if command[1] == "eveniment":

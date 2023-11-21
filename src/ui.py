@@ -74,6 +74,15 @@ def validate_command(command: list):
                     raise ValueError("Prea putine argumente")
 
                 enter("Invitatul a fost adaugat cu succes")
+            
+            elif command[1] == "random":
+                if len(command) > 3:
+                    raise ValueError("Prea multe argumente")
+
+                if command[2] not in ["invitat", "eveniment"]:
+                    raise ValueError("Al treilea argument invalid")
+
+                enter("Invitatul random a fost adaugat cu succes")
 
             else:
                 raise ValueError("Al doilea argument este invalid")

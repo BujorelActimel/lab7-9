@@ -1,3 +1,5 @@
+import random
+import string
 from event import Event
 from guest import Guest
 from datetime import date, time
@@ -71,3 +73,34 @@ def raport_guest_events(name, guest_list, event_list):
     if len(res) == 0:
         raise ValueError(f"{guest.getGuestName()} nu este inscris la niciun eveniment")
     return sorted(res, key=Event.getEventDate)
+
+
+def add_random_guest(guest_list):
+    random_name = ""
+    random_addres = "Strada "
+    for i in range(random.randint(5, 8)):
+        random_name += random.choice(string.ascii_lowercase)
+    
+    for i in range(random.randint(12, 15)):
+        random_addres += random.choice(string.ascii_letters)
+
+    random_guest = Guest(random_name, random_addres)
+    guest_list.append(random_guest)
+
+
+def add_random_event(event_list):
+    random_year = random.randint(1, 2024)
+    random_month = random.randint(1, 12)
+    random_day = random.randint(1, 30)
+    random_hour = random.randint(0, 23)
+    random_minute = random.randint(0, 59)
+
+    random_date = date(random_year, random_month, random_day)
+    random_time = time(random_hour, random_minute)
+
+    random_description = ""
+    for i in range(random.randint(12, 15)):
+        random_description += random.choice(string.ascii_letters)
+    
+    random_event = Event(random_date, random_time, random_description)
+    event_list.append(random_event)

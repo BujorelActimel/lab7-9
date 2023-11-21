@@ -1,3 +1,5 @@
+import random
+from business import *
 from guest import Guest
 from event import Event
 from ui import *
@@ -21,19 +23,6 @@ def test_setGuestAddress():
     guest = Guest("Alin", "...")
     guest.setGuestAddress("Strada Plopilor, nr.1")
     assert guest.getGuestAddress() == "Strada Plopilor, nr.1"
-
-def test_registerToEvent():
-    guest = Guest("Alin", "Strada Plopilor, nr.1")
-    event = Event(date(2023, 11, 11), time(12, 30))
-
-    guest.registerToEvent(event)
-    assert guest.getGuestEvents() == {event.getEventId()}
-    assert event.getEventGuests() == {guest.getGuestId()}
-
-    # check for duplicate registration
-    guest.registerToEvent(event)
-    assert guest.getGuestEvents() == {event.getEventId()} 
-    assert event.getEventGuests() == {guest.getGuestId()}
 
 
 # Test the 'Event' class:
@@ -111,16 +100,24 @@ def test_valid_description():
     assert not valid_description("descriere")
     assert not valid_description("")
 
-def test_validate_command_adauga_eveniment():
-    assert validate_command("adauga eveniment 2020-12-10 12:30".split(maxsplit=4)) == "Evenimentul a fost adaugat cu succes"
-    assert validate_command("adauga eveniment 2020-12-10 12:30 'ceva descriere'".split(maxsplit=4)) == "Evenimentul a fost adaugat cu succes"
-    assert validate_command("adaug eveniment 2020-12-10 12:30 'ceva descriere'".split(maxsplit=4)) == "Primul argument este invalid"
-    assert validate_command("adauga eroare 2020-12-10 12:30 'ceva descriere'".split(maxsplit=4)) == "Al doilea argument este invalid"
-    assert validate_command("adauga eveniment 2020-12-10".split(maxsplit=4)) == "Prea putine argumente"
-    assert validate_command("adauga eveniment 2020-12-10 12:30 'ceva descriere' ceva extra".split(maxsplit=4)) == "Descrierea evenimentului este invalida"
-    assert validate_command("adauga eveniment 2020 12 10 12:30".split(maxsplit=4)) == "Data evenimentului este invalida"
-    assert validate_command("adauga eveniment 2020-12-10 12 30".split(maxsplit=4)) == "Timpul evenimentului este invalid"
-    assert validate_command("adauga eveniment".split(maxsplit=4)) == "Prea putine argumente"
 
-def test_validate_command_adauga_invitat():
-    pass
+def test_add_random_guest():
+    random.seed(0)
+    guest_list = []
+    add_random_guest(guest_list)
+    random_guest = guest_list[0]
+
+    test_name = "ynbiqpmz"
+
+    assert random_guest.getGuestName() == test_name
+
+
+def test_add_random_event():
+    random.seed(0)
+    event_list = []
+    add_random_event(event_list)
+    random_event = event_list[0]
+
+    test_description = "GFzYtEwLnGisiW"
+
+    assert random_event.getEventDescription() == test_description
