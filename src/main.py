@@ -27,6 +27,21 @@ def main():
                         
                         elif command[1] == "invitat":
                             add_guest(extract_name(command), extract_address(command), all_guests)
+                    
+                    case "sterge":
+                        if command[1] == "eveniment":
+                            try:
+                                delete_event(extract_description(command), all_events)
+                                enter("Evenimentul a fost sters cu succes")
+                            except ValueError as error:
+                                enter(f"Eroare: {error}")
+
+                        elif command[1] == "invitat":
+                            try:
+                                delete_guest(extract_name(command), all_guests)
+                                enter("Invitatul a fost sters cu succes")
+                            except ValueError as error:
+                                enter(f"Eroare: {error}")
 
                     case "inscrie":
                         command[2] = " ".join(command[2:])

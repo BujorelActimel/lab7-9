@@ -43,3 +43,21 @@ def getEventByDescrpition(event_list: list, description: str):
         if event.getEventDescription() == description:
             return event
     raise ValueError("Evenimentul nu exista, incercati o descriere valida")
+
+
+def delete_event(description, event_list):
+    for index, event in enumerate(event_list):
+        if event.getEventDescription() == description:
+            event_list.pop(index)
+            del event
+            return
+    raise ValueError("Evenimentul nu exista, incercati o descriere valida")
+
+
+def delete_guest(name, guest_list):
+    for index, guest in enumerate(guest_list):
+        if guest.getGuestName() == name:
+            guest_list.pop(index)
+            del guest
+            return
+    raise ValueError("invitatul nu exista, incercati un nume valid")

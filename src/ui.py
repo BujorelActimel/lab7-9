@@ -75,6 +75,17 @@ def validate_command(command: list):
 
             else:
                 raise ValueError("Al doilea argument este invalid")
+        
+        case "sterge":
+            if command[1] == "eveniment":
+                if len(command) < 3:
+                    raise ValueError("Prea putine argumente")
+                if not valid_description(" ".join(command[2:])):
+                    raise ValueError("Descrierea evenimentului este invalida")
+            
+            if command[1] == "invitat":
+                if len(command) < 3:
+                    raise ValueError("Prea putine argumente")
 
         case "inscrie":
             if len(command) < 3:
@@ -85,8 +96,6 @@ def validate_command(command: list):
 
             if type(command[2]) != str:
                 raise ValueError("Al doilea argument este invalid")
-
-            command[2]
 
         case "exit":
             pass
@@ -146,7 +155,9 @@ def extract_time(command: list):
 def extract_description(command: list):
     event_description = ""
     if len(command) == 5:
-        event_description = command[4]
+        event_description = " ".join(command[4:])
+    elif len(command) == 3:
+        event_description = " ".join(command[2:])
     return event_description
 
 
