@@ -19,6 +19,7 @@ def print_menu():
     - cauta (eveniment/invitat)
     - inscrie (invitat la un eveniment)
     - retrage (invitat de la un eveniment)
+    - raport (invitat)
     - help
     - exit
     """)
@@ -36,6 +37,7 @@ def validate_command(command: list):
         "cauta", 
         "inscrie",
         "retrage",
+        "raport",
         "help",
         "exit",
         "debug",
@@ -90,12 +92,10 @@ def validate_command(command: list):
         case "inscrie":
             if len(command) < 3:
                 raise ValueError("Prea putine argumente")
-            
-            if type(command[1]) != str:
-                raise ValueError("Primul argument este invalid")
 
-            if type(command[2]) != str:
-                raise ValueError("Al doilea argument este invalid")
+        case "raport":
+            if len(command) < 3:
+                raise ValueError("Prea putine argumente")
 
         case "exit":
             pass

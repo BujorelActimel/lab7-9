@@ -43,6 +43,12 @@ def main():
                             except ValueError as error:
                                 enter(f"Eroare: {error}")
 
+                    case "modifica":
+                        pass
+
+                    case "cauta":
+                        pass
+
                     case "inscrie":
                         command[2] = " ".join(command[2:])
                         try:
@@ -74,6 +80,13 @@ def main():
                             registrations.register(guest, event)
                             enter("Inregistrarea a fost facuta cu succes")
 
+                    case "raport":
+                        if command[1] == "invitat":
+                            try:
+                                enter(raport_guest_events(extract_name(command), all_guests, all_events))
+                            except ValueError as error:
+                                enter(error)
+                
                     case "exit":
                         exit()
 

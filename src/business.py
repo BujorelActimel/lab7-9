@@ -61,3 +61,13 @@ def delete_guest(name, guest_list):
             del guest
             return
     raise ValueError("invitatul nu exista, incercati un nume valid")
+
+
+def raport_guest_events(name, guest_list, event_list):
+    guest = getGuestByName(guest_list, name)
+    res = []
+    for event_id in guest.getGuestEvents():
+        res.append(getEventById(event_list, event_id))
+    if len(res) == 0:
+        raise ValueError(f"{guest.getGuestName()} nu este inscris la niciun eveniment")
+    return sorted(res, key=Event.getEventDate)
