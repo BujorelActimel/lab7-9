@@ -249,6 +249,37 @@ def extract_address(command: list):
     elif command[0] == "modifica":
         return " ".join(command[4:])
 
+
+def help_menu():
+    clear()
+    enter(r"""Comenzi Valabile:
+    adauga eveniment {data eveniment} {timp eveniment} {descriere eveniment}
+        - data eveniment: an-luna-zi
+        - timp eveniment: ora:minut
+        - descriere eveniment: 'descr'
+    adauga invitat {nume invitat} {adresa eveniment}
+
+    modifica eveniment {id eveniment} {data eveniment} {timp eveniment} {descriere eveniment}
+    modifica invitat {id invitat} {nume invitat} {adresa eveniment}
+
+    sterge eveniment {descriere eveniment}
+    sterge invitat {nume invitat}
+
+    cauta eveniment {descriere eveniment}
+    cauta invitat {nume invitat}
+
+    inscrie {nume invitat} {descriere eveniment}
+
+    raport invitat {nume invitat}
+    raport invitati
+    raport evenimente
+
+    help
+    debug
+    exit
+    """)
+
+
 def exit():
     clear()    
     sys.exit("Bye bye")

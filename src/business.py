@@ -140,3 +140,11 @@ def top_guests(guest_list):
 
     return leaderboard
 
+
+def top_events(event_list):
+    sorted_events = sorted(event_list, key=lambda x: x.getNumberOfGuests(), reverse=True)
+
+    leaderboard = [[event.getEventDescription(), event.getNumberOfGuests()] for index, event in enumerate(sorted_events)]
+    # leaderboard = leaderboard[:(len(leaderboard) // 5 - 1)]
+
+    return leaderboard

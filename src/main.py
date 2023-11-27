@@ -1,16 +1,3 @@
-# Done:  - add
-#        - delete
-#        - register
-#        - raport: - invitat
-#        - exit
-#        - modify
-#        - search
-#        - raport: - leaderboard
-# 
-# TODO : - unregister(optional)
-#        - raport: - top events
-#        - help
-
 from ui import *
 from business import *
 from registrationLog import RegistrationLog
@@ -133,11 +120,16 @@ def main():
                             enter()
 
                         elif command[1] == "evenimente":
-                            pass
+                            for index, pair in enumerate(top_events(all_events)):
+                                if index < len(top_events(all_events)) // 5:
+                                    print(f"{index + 1}) {pair[0]}: {pair[1]} invitati")
+                                else:
+                                    break
+                            enter()
                 
 
                     case "help":
-                        pass
+                        help_menu()
 
 
                     case "exit":
