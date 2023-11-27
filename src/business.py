@@ -120,3 +120,13 @@ def modify_guest(guest_id, guest_name, guest_address, guest_list):
 
     guest.setGuestName(guest_name)
     guest.setGuestAddress(guest_address)
+
+
+def search_event(event_description, event_list):
+    event = getEventByDescrpition(event_list, event_description)
+    return f"id={event.getEventId()}\ndescriere={event.getEventDescription()}\ndata={event.getEventDate()}\ntimp={event.getEventTime()}"
+
+
+def search_guest(guest_name, guest_list):
+    guest = getGuestByName(guest_list, guest_name)
+    return f"id={guest.getGuestId()}\nnume={guest.getGuestName()}\nadresa={guest.getGuestAddress()}"

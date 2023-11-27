@@ -121,3 +121,11 @@ def test_add_random_event():
     test_description = "'GFzYtEwLnGisiW'"
 
     assert random_event.getEventDescription() == test_description
+
+
+def test_extract_description():
+    event_list = []
+    add_event(date(2023, 12, 20), time(12, 30), "'Olimpiada de sah'", event_list)
+    command = "cauta eveniment 'Olimpiada de sah'"
+    command = command.split()
+    assert extract_description(command) == "'Olimpiada de sah'"

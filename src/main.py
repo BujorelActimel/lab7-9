@@ -3,11 +3,10 @@
 #        - register
 #        - raport: - invitat
 #        - exit
-#        - modify: - event
-# 
-# TODO : - modify: - invitat
+#        - modify
 #        - search
-#        - unregister
+# 
+# TODO : - unregister
 #        - raport: - leaderboard
 #                  - top events
 #        - help
@@ -59,23 +58,40 @@ def main():
                             except ValueError as error:
                                 enter(f"Eroare: {error}")
 
+
                     case "modifica":
                         if command[1] == "eveniment":
                             command = " ".join(command)
                             command = command.split(maxsplit=5)
-                            modify_event(extract_id(command), extract_date(command), extract_time(command), extract_description(command), all_events)
-                        
+                            try:
+                                modify_event(extract_id(command), extract_date(command), extract_time(command), extract_description(command), all_events)
+                            except ValueError as error:
+                                enter(f"Eroare: {error}")
+                            
                         if command[1] == "invitat":
-                            modify_guest(extract_id(command), extract_name(command), extract_address(command), all_guests)
+                            try:
+                                modify_guest(extract_id(command), extract_name(command), extract_address(command), all_guests)
+                            except ValueError as error:
+                                enter(f"Eroare: {error}")
+
 
                     case "cauta":
-                        pass
+                        if command[1] == "eveniment":
+                            try:
+                                enter(search_event(extract_description(command), all_events))
+                            except ValueError as error:
+                                enter(f"Eroare: {error}")
+
+                        if command[1] == "invitat":
+                            try:
+                                enter(search_guest(extract_name(command), all_guests))
+                            except ValueError as error:
+                                enter(f"Eroare: {error}")
 
 
                     case "inscrie":
-                        command[2] = " ".join(command[2:])
                         try:
-                            guest = getGuestByName(all_guests, command[1])
+                            guest = getGuestByName(all_guests, extract_name(command))
                         except ValueError as error:
                             enter(f"Eroare: {error}")
                             continue
@@ -87,7 +103,7 @@ def main():
                                 continue
 
                         try:
-                            event = getEventByDescrpition(all_events, command[2])
+                            event = getEventByDescrpition(all_events, extract_description(command))
                         except ValueError as error:
                             enter(f"Eroare: {error}")
                             continue

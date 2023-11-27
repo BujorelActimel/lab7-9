@@ -94,9 +94,12 @@ def validate_command(command: list):
                 if not valid_description(" ".join(command[2:])):
                     raise ValueError("Descrierea evenimentului este invalida")
             
-            if command[1] == "invitat":
+            elif command[1] == "invitat":
                 if len(command) < 3:
                     raise ValueError("Prea putine argumente")
+            
+            else:
+                raise ValueError("Al doilea argument este invalid")
 
         case "modifica":
             if command[1] == "eveniment":
@@ -112,16 +115,34 @@ def validate_command(command: list):
                 if not valid_time(command[4]):
                     raise ValueError("Timpul evenimentului este invalid")
 
-                if not valid_description(command[5]):
+                if not valid_description(extract_description(command)):
                     raise ValueError("Descrierea evenimentului este invalida")
                 
                 enter("Evenimentul a fost modificat cu succes")
             
-            if command[1] == "invitat":
+            elif command[1] == "invitat":
                 if len(command) < 5:
                     raise ValueError("Prea putine argumente")
                 
                 enter("Invitatul a fost modificat cu succes")
+            
+            else:
+                raise ValueError("Al doilea argument este invalid")
+
+        case "cauta":
+            if command[1] == "eveniment":
+                if len(command) < 3:
+                    raise ValueError("Prea putine argumente")
+                
+                if not valid_description(extract_description(command)):
+                    raise ValueError("Descrierea evenimentului este invalida")
+            
+            elif command[1] == "invitat":
+                if len(command) < 3:
+                    raise ValueError("Prea putine argumente")
+            
+            else:
+                raise ValueError("Al doilea argument este invalid")
 
         case "inscrie":
             if len(command) < 3:
@@ -177,10 +198,10 @@ def valid_description(input_description: str):
 
 
 def extract_date(command: list):
-    if len(command) <= 5:
+    if command[0] == "adauga":
         year, month, day = list(map(int, command[2].split("-")))
         return date(year, month, day)
-    elif len(command) > 5:
+    elif command[0] == "modifica":
         year, month, day = list(map(int, command[3].split("-")))
         return date(year, month, day)
 
@@ -190,30 +211,33 @@ def extract_id(command: list):
 
 
 def extract_time(command: list):
-    if len(command) <= 5:
+    if command[0] == "adauga":
         hour, minute = list(map(int, command[3].split(":")))
         return time(hour, minute)
-    elif len(command) > 5:
+
+    elif command[0] == "modifica":
         hour, minute = list(map(int, command[4].split(":")))
         return time(hour, minute)
 
 
 def extract_description(command: list):
     event_description = ""
-    if len(command) > 5:
+    if command[0] == "modifica":
         event_description = " ".join(command[5:])
-    if len(command) == 5:
+    elif command[0] == "adauga" and len(command) == 5:
         event_description = " ".join(command[4:])
-    elif len(command) == 3:
+    elif command[0] == "sterge" or command[0] == "cauta" or command[0] == "inscrie":
         event_description = " ".join(command[2:])
     return event_description
 
 
 def extract_name(command: list):
-    if command[0] == "adauga":
+    if command[0] == "adauga" or command[0] == "sterge" or command[0] == "cauta" or command[0] == "raport":
         return command[2]
     elif command[0] == "modifica":
         return command[3]
+    elif command[0] == "inscrie":
+        return command[1]
 
 
 def extract_address(command: list):
