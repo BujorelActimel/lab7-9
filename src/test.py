@@ -118,6 +118,6 @@ def test_add_random_event():
     add_random_event(event_list)
     random_event = event_list[0]
 
-    test_description = "GFzYtEwLnGisiW"
+    test_description = "'GFzYtEwLnGisiW'"
 
     assert random_event.getEventDescription() == test_description

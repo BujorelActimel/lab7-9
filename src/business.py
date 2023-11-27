@@ -98,9 +98,25 @@ def add_random_event(event_list):
     random_date = date(random_year, random_month, random_day)
     random_time = time(random_hour, random_minute)
 
-    random_description = ""
+    random_description = "'"
     for i in range(random.randint(12, 15)):
         random_description += random.choice(string.ascii_letters)
+    random_description += "'"
     
     random_event = Event(random_date, random_time, random_description)
     event_list.append(random_event)
+
+
+def modify_event(event_id, event_date, event_time, event_description, event_list):
+    event = getEventById(event_list, event_id)
+
+    event.setEventDate(event_date)
+    event.setEventTime(event_time)
+    event.setEventDescription(event_description)
+
+
+def modify_guest(guest_id, guest_name, guest_address, guest_list):
+    guest = getGuestById(guest_list, guest_id)
+
+    guest.setGuestName(guest_name)
+    guest.setGuestAddress(guest_address)

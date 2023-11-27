@@ -98,6 +98,31 @@ def validate_command(command: list):
                 if len(command) < 3:
                     raise ValueError("Prea putine argumente")
 
+        case "modifica":
+            if command[1] == "eveniment":
+                command = " ".join(command)
+                command = command.split(maxsplit=5)
+
+                if len(command) < 6:
+                    raise ValueError("Prea putine argumente")
+
+                if not valid_date(command[3]):
+                    raise ValueError("Data evenimentului este invalida")
+
+                if not valid_time(command[4]):
+                    raise ValueError("Timpul evenimentului este invalid")
+
+                if not valid_description(command[5]):
+                    raise ValueError("Descrierea evenimentului este invalida")
+                
+                enter("Evenimentul a fost modificat cu succes")
+            
+            if command[1] == "invitat":
+                if len(command) < 5:
+                    raise ValueError("Prea putine argumente")
+                
+                enter("Invitatul a fost modificat cu succes")
+
         case "inscrie":
             if len(command) < 3:
                 raise ValueError("Prea putine argumente")
@@ -152,17 +177,31 @@ def valid_description(input_description: str):
 
 
 def extract_date(command: list):
-    year, month, day = list(map(int, command[2].split("-")))
-    return date(year, month, day)
+    if len(command) <= 5:
+        year, month, day = list(map(int, command[2].split("-")))
+        return date(year, month, day)
+    elif len(command) > 5:
+        year, month, day = list(map(int, command[3].split("-")))
+        return date(year, month, day)
+
+
+def extract_id(command: list):
+    return command[2]
 
 
 def extract_time(command: list):
-    hour, minute = list(map(int, command[3].split(":")))
-    return time(hour, minute)
+    if len(command) <= 5:
+        hour, minute = list(map(int, command[3].split(":")))
+        return time(hour, minute)
+    elif len(command) > 5:
+        hour, minute = list(map(int, command[4].split(":")))
+        return time(hour, minute)
 
 
 def extract_description(command: list):
     event_description = ""
+    if len(command) > 5:
+        event_description = " ".join(command[5:])
     if len(command) == 5:
         event_description = " ".join(command[4:])
     elif len(command) == 3:
@@ -171,12 +210,17 @@ def extract_description(command: list):
 
 
 def extract_name(command: list):
-    return command[2]
+    if command[0] == "adauga":
+        return command[2]
+    elif command[0] == "modifica":
+        return command[3]
 
 
 def extract_address(command: list):
-    return " ".join(command[3:])
-
+    if command[0] == "adauga":
+        return " ".join(command[3:])
+    elif command[0] == "modifica":
+        return " ".join(command[4:])
 
 def exit():
     clear()    

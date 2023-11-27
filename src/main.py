@@ -1,8 +1,17 @@
-# comenzi:
-#     - adauga, sterge, modifica, cauta:
-#         eveniment
-#         invitat
-#     - inscrie invitat la un eveniment
+# Done:  - add
+#        - delete
+#        - register
+#        - raport: - invitat
+#        - exit
+#        - modify: - event
+# 
+# TODO : - modify: - invitat
+#        - search
+#        - unregister
+#        - raport: - leaderboard
+#                  - top events
+#        - help
+
 from ui import *
 from business import *
 from registrationLog import RegistrationLog
@@ -51,10 +60,17 @@ def main():
                                 enter(f"Eroare: {error}")
 
                     case "modifica":
-                        pass
+                        if command[1] == "eveniment":
+                            command = " ".join(command)
+                            command = command.split(maxsplit=5)
+                            modify_event(extract_id(command), extract_date(command), extract_time(command), extract_description(command), all_events)
+                        
+                        if command[1] == "invitat":
+                            modify_guest(extract_id(command), extract_name(command), extract_address(command), all_guests)
 
                     case "cauta":
                         pass
+
 
                     case "inscrie":
                         command[2] = " ".join(command[2:])
@@ -87,6 +103,7 @@ def main():
                             registrations.register(guest, event)
                             enter("Inregistrarea a fost facuta cu succes")
 
+
                     case "raport":
                         if command[1] == "invitat":
                             try:
@@ -94,8 +111,10 @@ def main():
                             except ValueError as error:
                                 enter(error)
                 
+
                     case "exit":
                         exit()
+
 
                     case "debug":
                         print(registrations)
