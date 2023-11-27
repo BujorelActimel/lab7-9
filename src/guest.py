@@ -26,6 +26,9 @@ class Guest:
     def getGuestEvents(self):
         return self.events
 
+    def getNumberOfEvents(self):
+        return len(self.getGuestEvents())
+
     def setGuestName(self, new_name: str):
         self.name = new_name
 

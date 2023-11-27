@@ -1,3 +1,4 @@
+import copy
 import random
 import string
 from event import Event
@@ -130,3 +131,12 @@ def search_event(event_description, event_list):
 def search_guest(guest_name, guest_list):
     guest = getGuestByName(guest_list, guest_name)
     return f"id={guest.getGuestId()}\nnume={guest.getGuestName()}\nadresa={guest.getGuestAddress()}"
+
+
+def top_guests(guest_list):
+    sorted_guests = sorted(guest_list, key=lambda x: x.getNumberOfEvents(), reverse=True)
+    
+    leaderboard = [[guest.getGuestName(), guest.getNumberOfEvents()] for guest in sorted_guests]
+
+    return leaderboard
+

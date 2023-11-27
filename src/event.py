@@ -31,6 +31,9 @@ class Event:
     def getEventGuests(self):
         return self.guests
 
+    def getNumberOfGuests(self):
+        return len(self.getEventGuests())
+
     def setEventDate(self, new_date: datetime.date):
         self.date = new_date
 

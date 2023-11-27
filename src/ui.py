@@ -6,7 +6,7 @@ def clear():
     os.system("cls")
 
 
-def enter(msg):
+def enter(msg=""):
     input(f"{msg}\nPress Enter to continue")
 
 
@@ -149,8 +149,11 @@ def validate_command(command: list):
                 raise ValueError("Prea putine argumente")
 
         case "raport":
-            if len(command) < 3:
+            if len(command) < 2:
                 raise ValueError("Prea putine argumente")
+            
+            if command[1] not in ["invitat", "invitati", "evenimente"]:
+                raise ValueError("Al doilea argument este invalid")
 
         case "exit":
             pass

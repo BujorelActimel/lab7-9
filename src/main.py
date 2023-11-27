@@ -5,10 +5,10 @@
 #        - exit
 #        - modify
 #        - search
-# 
-# TODO : - unregister
 #        - raport: - leaderboard
-#                  - top events
+# 
+# TODO : - unregister(optional)
+#        - raport: - top events
 #        - help
 
 from ui import *
@@ -126,7 +126,19 @@ def main():
                                 enter(raport_guest_events(extract_name(command), all_guests, all_events))
                             except ValueError as error:
                                 enter(error)
+                        
+                        elif command[1] == "invitati":
+                            for index, pair in enumerate(top_guests(all_guests)):
+                                print(f"{index + 1}) {pair[0]}: {pair[1]} evenimente")
+                            enter()
+
+                        elif command[1] == "evenimente":
+                            pass
                 
+
+                    case "help":
+                        pass
+
 
                     case "exit":
                         exit()
