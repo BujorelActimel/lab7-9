@@ -152,7 +152,7 @@ def validate_command(command: list):
             if len(command) < 2:
                 raise ValueError("Prea putine argumente")
             
-            if command[1] not in ["invitat", "invitati", "evenimente"]:
+            if command[1] not in ["invitat", "invitati", "evenimente", "invitati2"]:
                 raise ValueError("Al doilea argument este invalid")
 
         case "exit":
@@ -248,6 +248,30 @@ def extract_address(command: list):
         return " ".join(command[3:])
     elif command[0] == "modifica":
         return " ".join(command[4:])
+
+
+def print_top_guests(guest_list):
+    for index, pair in enumerate(top_guests(all_guests)):
+        print(f"{index + 1}) {pair[0]}: {pair[1]} evenimente")
+    enter()
+
+
+def print_top_20_percent_events(event_list):
+    for index, pair in enumerate(top_events(all_events)):
+        if index < len(top_events(all_events)) // 5:
+            print(f"{index + 1}) {pair[0]}: {pair[1]} invitati")
+        else:
+            break
+    enter()
+
+
+def print_top_20_percent_guests(guest_list):
+    for index, pair in enumerate(top_guests(all_guests)):
+        if index < len(top_guests(all_guests)) // 5:
+            print(f"{index + 1}) {pair[0]}: {pair[1]} evenimente")
+        else:
+            break
+    enter()
 
 
 def help_menu():

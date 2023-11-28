@@ -115,17 +115,13 @@ def main():
                                 enter(error)
                         
                         elif command[1] == "invitati":
-                            for index, pair in enumerate(top_guests(all_guests)):
-                                print(f"{index + 1}) {pair[0]}: {pair[1]} evenimente")
-                            enter()
+                            print_top_guests(all_guests)
 
                         elif command[1] == "evenimente":
-                            for index, pair in enumerate(top_events(all_events)):
-                                if index < len(top_events(all_events)) // 5:
-                                    print(f"{index + 1}) {pair[0]}: {pair[1]} invitati")
-                                else:
-                                    break
-                            enter()
+                            print_top_20_percent_events(all_events)
+
+                        elif command[1] == "invitati2":
+                            print_top_20_percent_guests(all_guests)
                 
 
                     case "help":

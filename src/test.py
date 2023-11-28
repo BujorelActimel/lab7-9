@@ -3,6 +3,7 @@ from business import *
 from guest import Guest
 from event import Event
 from ui import *
+from registrationLog import RegistrationLog
 from datetime import date, time
 
 # Test the 'Guest' class: 
@@ -129,3 +130,77 @@ def test_extract_description():
     command = "cauta eveniment 'Olimpiada de sah'"
     command = command.split()
     assert extract_description(command) == "'Olimpiada de sah'"
+
+
+def test_top_guests():
+    guest1 = Guest("alin1", "str. Trotusului")
+    guest2 = Guest("alin2", "str. Trotusului")
+    guest3 = Guest("alin3", "str. Trotusului")
+    guest4 = Guest("alin4", "str. Trotusului")
+    guest5 = Guest("alin5", "str. Trotusului")
+    guest_list = [guest1, guest2, guest3, guest4, guest5]
+
+    event1 = Event(date(2023, 12, 10), time(12, 30), "'descriere1'")
+    event2 = Event(date(2023, 12, 10), time(12, 30), "'descriere2'")
+    event3 = Event(date(2023, 12, 10), time(12, 30), "'descriere3'")
+    event4 = Event(date(2023, 12, 10), time(12, 30), "'descriere4'")
+    event5 = Event(date(2023, 12, 10), time(12, 30), "'descriere5'")
+    event_list = [event1, event2, event3, event4, event5]
+
+    log = RegistrationLog()
+
+    log.register(guest1, event1)
+    log.register(guest1, event2) # guest1 = 2 events
+    
+    log.register(guest2, event1)
+    log.register(guest2, event2)
+    log.register(guest2, event5) # guest2 = 3 events
+    
+    log.register(guest3, event1) # guest3 = 1 events
+
+                                 # guest4 = 0 events
+                                 # guest5 = 0 events
+    
+    assert top_guests(guest_list) == [
+        ["alin2", 3],
+        ["alin1", 2],
+        ["alin3", 1],
+        ["alin4", 0],
+        ["alin5", 0],
+    ]
+
+def test_top_events():
+    guest1 = Guest("alin1", "str. Trotusului")
+    guest2 = Guest("alin2", "str. Trotusului")
+    guest3 = Guest("alin3", "str. Trotusului")
+    guest4 = Guest("alin4", "str. Trotusului")
+    guest5 = Guest("alin5", "str. Trotusului")
+    guest_list = [guest1, guest2, guest3, guest4, guest5]
+
+    event1 = Event(date(2023, 12, 10), time(12, 30), "'descriere1'")
+    event2 = Event(date(2023, 12, 10), time(12, 30), "'descriere2'")
+    event3 = Event(date(2023, 12, 10), time(12, 30), "'descriere3'")
+    event4 = Event(date(2023, 12, 10), time(12, 30), "'descriere4'")
+    event5 = Event(date(2023, 12, 10), time(12, 30), "'descriere5'")
+    event_list = [event1, event2, event3, event4, event5]
+
+    log = RegistrationLog()
+
+    log.register(guest1, event1)
+    log.register(guest2, event1) # event1 = 2 guests
+
+    log.register(guest1, event2)
+    log.register(guest2, event2)
+    log.register(guest3, event2) # event2 = 3 guests
+
+    log.register(guest1, event3) # event3 = 1 guests
+                                 # event4 = 0 guests
+                                 # event5 = 0 guests
+    
+    assert top_events(event_list) == [
+        ["'descriere2'", 3],
+        ["'descriere1'", 2],
+        ["'descriere3'", 1],
+        ["'descriere4'", 0],
+        ["'descriere5'", 0],
+    ]
