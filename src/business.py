@@ -4,6 +4,7 @@ import string
 from event import Event
 from guest import Guest
 from datetime import date, time
+from registrationLog import RegistrationLog
 
 
 def add_event(event_date: date, event_time: time, event_description: str, event_list: list):
@@ -148,3 +149,56 @@ def top_events(event_list):
     # leaderboard = leaderboard[:(len(leaderboard) // 5 - 1)]
 
     return leaderboard
+
+
+def save_events_to_csv(file, event_list):
+    with open(file, "w") as f:
+        f.write("id,Date,Time,Description\n")
+        for event in event_list:
+            f.write(f"{event.getEventId()},{event.getEventDate()},{event.getEventTime()},{event.getEventDescription()}")
+
+
+def save_guests_to_csv(file, guest_list):
+    with open(file, "w") as f:
+        f.write("id,Name,Address\n")
+        for guest in guest_list:
+            f.write(f"{guest.getGuestId()},{guest.getGuestName()},{guest.getGuestAddress()}")
+
+
+def save_logs_to_csv(file, registration_log):
+    with open(file, "w") as f:
+        f.write("GuestId,EventId\n")
+        for log in registration_log.getLogs():
+            f.write(f"{log.getGuest().getGuestId()},{log.getEvent().getEventId()}")
+
+
+def get_events_from_csv(file):
+    event_list = []
+    with open(file, "r") as f:
+        for line in f.readlines()[1:]:
+            event = line.split(",")
+            event_year, event_month, event_day = list(map(int, event[1].split("-")))
+            try:
+                event_hour, event_minute = list(map(int, event[2].split(":")))
+            except ValueError:
+                event_hour, event_minute, event_second = list(map(int, event[2].split(":")))
+            event_list.append(Event(date(event_year, event_month, event_day), time(event_hour, event_minute), event[3], event[0]))
+    return event_list
+
+
+def get_guests_from_csv(file):
+    guest_list = []
+    with open(file, "r") as f:
+        for line in f.readlines()[1:]:
+            guest = line.split(",")
+            guest_list.append(Guest(guest[1], guest[2], guest[0]))
+    return guest_list
+
+
+def get_logs_from_csv(file, guest_list, event_list):
+    registration_log = RegistrationLog()
+    with open(file, "r") as f:
+        for line in f.readlines()[1:]:
+            log = line.split(",")
+            registration_log.register(getGuestById(guest_list, log[0]), getEventById(event_list, log[1]))
+    return registration_log

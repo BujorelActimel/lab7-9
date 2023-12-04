@@ -3,8 +3,8 @@ from business import *
 from registrationLog import RegistrationLog
 
 def main():
-    registrations = RegistrationLog()
-    all_guests, all_events = [], []
+    all_guests, all_events = get_guests_from_csv("data/guests.csv"), get_events_from_csv("data/events.csv")
+    registrations = get_logs_from_csv("data/logs.csv", all_guests, all_events)
 
     while True:
         print_menu()
@@ -109,16 +109,13 @@ def main():
 
                     case "raport":
                         if command[1] == "invitat":
-                            try:
-                                enter(raport_guest_events(extract_name(command), all_guests, all_events))
-                            except ValueError as error:
-                                enter(error)
+                            enter(registrations.getEventsByGuest(getGuestByName(all_guests, extract_name(command))))
                         
                         elif command[1] == "invitati":
-                            print_top_guests(all_guests)
+                            print_top_guests(registrations)
 
                         elif command[1] == "evenimente":
-                            print_top_20_percent_events(all_events)
+                            print_top_20_percent_events(registrations)
 
                         elif command[1] == "invitati2":
                             print_top_20_percent_guests(all_guests)
@@ -129,6 +126,9 @@ def main():
 
 
                     case "exit":
+                        save_events_to_csv("data/events.csv", all_events)
+                        save_guests_to_csv("data/guests.csv", all_guests)
+                        save_logs_to_csv("data/logs.csv", registrations)
                         exit()
 
 

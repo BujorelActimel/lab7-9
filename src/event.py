@@ -3,8 +3,11 @@ import uuid
 import datetime
 
 class Event:
-    def __init__(self, date: datetime.date, time: datetime.time, description = ""):
-        self.eventId = str(uuid.uuid4())
+    def __init__(self, date: datetime.date, time: datetime.time, description = "", eventId = None):
+        if eventId:
+            self.eventId = eventId
+        else:
+            self.eventId = str(uuid.uuid4())
         self.date = date
         self.time = time
         self.description = description

@@ -2,8 +2,11 @@
 import uuid
 
 class Guest:
-    def __init__(self, name: str, address: str):
-        self.guestId = str(uuid.uuid4())
+    def __init__(self, name: str, address: str, guestId = None):
+        if guestId:
+            self.guestId = guestId
+        else:
+            self.guestId = str(uuid.uuid4())
         self.name = name
         self.address = address
         self.events = set() # set of event id's

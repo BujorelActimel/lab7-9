@@ -250,28 +250,16 @@ def extract_address(command: list):
         return " ".join(command[4:])
 
 
-def print_top_guests(guest_list):
-    for index, pair in enumerate(top_guests(all_guests)):
-        print(f"{index + 1}) {pair[0]}: {pair[1]} evenimente")
-    enter()
+def print_top_guests(registration_log):
+    enter(registration_log.getGuestsByMostEvents())
 
 
-def print_top_20_percent_events(event_list):
-    for index, pair in enumerate(top_events(all_events)):
-        if index < len(top_events(all_events)) // 5:
-            print(f"{index + 1}) {pair[0]}: {pair[1]} invitati")
-        else:
-            break
-    enter()
+def print_top_20_percent_events(registration_log):
+    enter(registration_log.getEventsByMostGuests())
 
 
-def print_top_20_percent_guests(guest_list):
-    for index, pair in enumerate(top_guests(all_guests)):
-        if index < len(top_guests(all_guests)) // 5:
-            print(f"{index + 1}) {pair[0]}: {pair[1]} evenimente")
-        else:
-            break
-    enter()
+def print_top_20_percent_guests(registration_log):
+    enter(registration_log.getGuestsByMostEvents()[:int(len(registration_log.getGuestsByMostEvents())*0.2)])
 
 
 def help_menu():
