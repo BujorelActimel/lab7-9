@@ -16,10 +16,10 @@ def add_guest(guest_name, guest_address, guest_list: list):
 
 
 def getGuestById(guest_list, guest_id: str):
-        for guest in guest_list:
-            if guest.getGuestId() == guest_id:
-                return guest
-        raise ValueError("Invitatul nu exista, incercati un id valid")
+    for guest in guest_list:
+        if guest.getGuestId() == guest_id:
+            return guest
+    raise ValueError("Invitatul nu exista, incercati un id valid")
 
 
 def getEventById(event_list, event_id: str):
@@ -155,21 +155,21 @@ def save_events_to_csv(file, event_list):
     with open(file, "w") as f:
         f.write("id,Date,Time,Description\n")
         for event in event_list:
-            f.write(f"{event.getEventId()},{event.getEventDate()},{event.getEventTime()},{event.getEventDescription()}")
+            f.write(f"{event.getEventId()},{event.getEventDate()},{event.getEventTime()},{event.getEventDescription()}\n")
 
 
 def save_guests_to_csv(file, guest_list):
     with open(file, "w") as f:
         f.write("id,Name,Address\n")
         for guest in guest_list:
-            f.write(f"{guest.getGuestId()},{guest.getGuestName()},{guest.getGuestAddress()}")
+            f.write(f"{guest.getGuestId()},{guest.getGuestName()},{guest.getGuestAddress()}\n")
 
 
 def save_logs_to_csv(file, registration_log):
     with open(file, "w") as f:
         f.write("GuestId,EventId\n")
         for log in registration_log.getLogs():
-            f.write(f"{log.getGuest().getGuestId()},{log.getEvent().getEventId()}")
+            f.write(f"{log.getGuest().getGuestId()},{log.getEvent().getEventId()}\n")
 
 
 def get_events_from_csv(file):
@@ -182,7 +182,7 @@ def get_events_from_csv(file):
                 event_hour, event_minute = list(map(int, event[2].split(":")))
             except ValueError:
                 event_hour, event_minute, event_second = list(map(int, event[2].split(":")))
-            event_list.append(Event(date(event_year, event_month, event_day), time(event_hour, event_minute), event[3], event[0]))
+            event_list.append(Event(date(event_year, event_month, event_day), time(event_hour, event_minute), event[3].strip(), event[0]))
     return event_list
 
 
@@ -191,7 +191,7 @@ def get_guests_from_csv(file):
     with open(file, "r") as f:
         for line in f.readlines()[1:]:
             guest = line.split(",")
-            guest_list.append(Guest(guest[1], guest[2], guest[0]))
+            guest_list.append(Guest(guest[1], guest[2].strip(), guest[0]))
     return guest_list
 
 
@@ -200,5 +200,5 @@ def get_logs_from_csv(file, guest_list, event_list):
     with open(file, "r") as f:
         for line in f.readlines()[1:]:
             log = line.split(",")
-            registration_log.register(getGuestById(guest_list, log[0]), getEventById(event_list, log[1]))
+            registration_log.register(getGuestById(guest_list, log[0]), getEventById(event_list, log[1].strip()))
     return registration_log

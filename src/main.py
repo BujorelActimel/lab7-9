@@ -108,17 +108,20 @@ def main():
 
 
                     case "raport":
-                        if command[1] == "invitat":
-                            enter(registrations.getEventsByGuest(getGuestByName(all_guests, extract_name(command))))
-                        
-                        elif command[1] == "invitati":
-                            print_top_guests(registrations)
+                        try:
+                            if command[1] == "invitat":
+                                enter(registrations.getEventsByGuest(getGuestByName(all_guests, extract_name(command))))
+                            
+                            elif command[1] == "invitati":
+                                print_top_guests(registrations)
 
-                        elif command[1] == "evenimente":
-                            print_top_20_percent_events(registrations)
+                            elif command[1] == "evenimente":
+                                print_top_20_percent_events(registrations)
 
-                        elif command[1] == "invitati2":
-                            print_top_20_percent_guests(all_guests)
+                            elif command[1] == "invitati2":
+                                print_top_20_percent_guests(all_guests)
+                        except ValueError as error:
+                            enter(f"Eroare: {error}")
                 
 
                     case "help":
@@ -134,7 +137,13 @@ def main():
 
                     case "debug":
                         print(registrations)
-                        enter(f"Guests: {all_guests}\nEvents: {all_events}")
+                        print("Guests:")
+                        for guest in all_guests:
+                            print(guest)
+                        print("\nEvents:")
+                        for event in all_events:
+                            print(event)
+                        enter()
 
             except IndexError:
                 pass
