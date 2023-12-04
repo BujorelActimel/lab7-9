@@ -34,17 +34,6 @@ class RegistrationLog:
         event.registerGuest(guest)
         self.logs.append(Log(event, guest))
 
-    def unregister(self, guest, event):
-        if guest.getGuestId() not in event.getEventGuests():
-            raise ValueError(f"{guest.getGuestName()} nu este inscris la {event.getEventDescription()}")
-        guest.unregisterFromEvent(event)
-        event.unregisterGuest(guest)
-        for index, log in enumerate(self.getLogs()):
-            if log.getGuest().getGuestId() == guest.getGuestId() and log.getEvent().getEventId() == event.getEventId():
-                self.getLogs().pop(index)
-                del log
-                return
-
     # Lista de evenimente la care participă o persoană, ordonată alfabetic după descriere sau după dată.
     def getEventsByGuest(self, guest):
         events = []
@@ -55,24 +44,16 @@ class RegistrationLog:
 
     # Persoanele participante la cele mai multe evenimente.
     def getGuestsByMostEvents(self):
-        guests = {}
+        guests = []
         for log in self.getLogs():
-            if log.getGuest().getGuestName() not in guests:
-                guests[log.getGuest().getGuestName()] = 1
-            else:
-                guests[log.getGuest().getGuestName()] += 1 
-        
-        guests = {k: v for k, v in sorted(guests.items(), key=lambda item: item[1], reverse=True)}
+            guests.append(log.getGuest())
+        guests.sort(key=lambda x: len(self.getEventsByGuest(x)), reverse=True)
         return guests
 
-    # Evenimentele cu cei mai mulți participanți, afișând descrierea și numărul de participanți.
+    # Primele 20% evenimente cu cei mai mulți participanți, afișând descrierea și numărul de participanți.
     def getEventsByMostGuests(self):
-        events = {}
+        events = []
         for log in self.getLogs():
-            if log.getEvent().getEventDescription() not in events:
-                events[log.getEvent().getEventDescription()] = 1
-            else:
-                events[log.getEvent().getEventDescription()] += 1 
-        
-        events = {k: v for k, v in sorted(events.items(), key=lambda item: item[1], reverse=True)}
-        return events
+            events.append(log.getEvent())
+        events.sort(key=lambda x: len(x.getGuests()), reverse=True)
+        return events[:int(len(events)*0.2)]

@@ -40,6 +40,3 @@ class Guest:
 
     def registerToEvent(self, event: "Event"):
         self.events.add(event.getEventId())
-    
-    def unregisterFromEvent(self, event: "Event"):
-        self.events.remove(event.getEventId())
