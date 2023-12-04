@@ -69,11 +69,21 @@ def main():
                             except ValueError as error:
                                 enter(f"Eroare: {error}")
 
-                        if command[1] == "invitat":
+                        elif command[1] == "invitat":
                             try:
                                 enter(search_guest(extract_name(command), all_guests))
                             except ValueError as error:
                                 enter(f"Eroare: {error}")
+                        
+                        elif command[1] == "invitati":
+                            for guest in all_guests:
+                                print(guest)
+                            enter()
+                        
+                        elif command[1] == "evenimente":
+                            for event in all_events:
+                                print(event)
+                            enter()
 
 
                     case "inscrie":
@@ -103,8 +113,11 @@ def main():
                                 continue
 
                         else:
-                            registrations.register(guest, event)
-                            enter("Inregistrarea a fost facuta cu succes")
+                            try:
+                                registrations.register(guest, event)
+                                enter("Inregistrarea a fost facuta cu succes")
+                            except ValueError as error:
+                                enter(f"Eroare: {error}")
 
 
                     case "raport":

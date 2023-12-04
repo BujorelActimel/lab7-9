@@ -21,13 +21,15 @@ class RegistrationLog:
     def __str__(self):
         log_string = "Logs:\n"
         for log in self.getLogs():
-            log_string += f"{log.getGuest().getGuestName()} registered to {log.getEvent().getEventDescription()}\n"
+            log_string += f"{log.getGuest().getGuestName()} s-a inscris la {log.getEvent().getEventDescription()}\n"
         return log_string
 
     def getLogs(self):
         return self.logs
 
     def register(self, guest, event):
+        if guest.getGuestId() in event.getEventGuests():
+            raise ValueError(f"{guest.getGuestName()} este deja inscris la {event.getEventDescription()}")
         guest.registerToEvent(event)
         event.registerGuest(guest)
         self.logs.append(Log(event, guest))

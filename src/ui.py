@@ -141,6 +141,14 @@ def validate_command(command: list):
                 if len(command) < 3:
                     raise ValueError("Prea putine argumente")
             
+            elif command[1] == "invitati":
+                if len(command) > 2:
+                    raise ValueError("Prea multe argumente")
+            
+            elif command[1] == "evenimente":
+                if len(command) > 2:
+                    raise ValueError("Prea multe argumente")
+            
             else:
                 raise ValueError("Al doilea argument este invalid")
 
@@ -279,6 +287,8 @@ def help_menu():
 
     cauta eveniment {descriere eveniment}
     cauta invitat {nume invitat}
+    cauta evenimente
+    cauta invitati
 
     inscrie {nume invitat} {descriere eveniment}
 
