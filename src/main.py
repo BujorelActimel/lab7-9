@@ -33,14 +33,14 @@ def main():
                     case "sterge":
                         if command[1] == "eveniment":
                             try:
-                                delete_event(extract_description(command), all_events)
+                                delete_event(extract_description(command), all_events, registrations)
                                 enter("Evenimentul a fost sters cu succes")
                             except ValueError as error:
                                 enter(f"Eroare: {error}")
 
                         elif command[1] == "invitat":
                             try:
-                                delete_guest(extract_name(command), all_guests)
+                                delete_guest(extract_name(command), all_guests, registrations)
                                 enter("Invitatul a fost sters cu succes")
                             except ValueError as error:
                                 enter(f"Eroare: {error}")
@@ -123,7 +123,9 @@ def main():
                     case "raport":
                         try:
                             if command[1] == "invitat":
-                                enter(registrations.getEventsByGuest(getGuestByName(all_guests, extract_name(command))))
+                                for event in registrations.getEventsByGuest(getGuestByName(all_guests, extract_name(command))):
+                                    print(event)
+                                enter()
                             
                             elif command[1] == "invitati":
                                 print_top_guests(registrations)

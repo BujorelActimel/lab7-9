@@ -48,3 +48,6 @@ class Event:
 
     def registerGuest(self, guest: "Guest"):
         self.guests.add(guest.getGuestId())
+
+    def unregisterGuest(self, guest: "Guest"):
+        self.guests.remove(guest.getGuestId())

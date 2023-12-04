@@ -259,15 +259,38 @@ def extract_address(command: list):
 
 
 def print_top_guests(registration_log):
-    enter(registration_log.getGuestsByMostEvents())
+    place = 1
+    guests = registration_log.getGuestsByMostEvents()
+    for guest in guests:
+        print(f"{place}) {guest}: {guests[guest]}")
+        place += 1
+    enter()
 
 
 def print_top_20_percent_events(registration_log):
-    enter(registration_log.getEventsByMostGuests())
+    place = 1
+    try:
+        events = registration_log.getEventsByMostGuests()[:int(len(registration_log.getEventsByMostGuests())*0.2)]
+    except TypeError:
+        enter("Nu exista destule evenimente")
+        return
+    for event in events:
+        print(f"{place}) {event}: {events[event]}")
+        place += 1
+    enter()
 
 
 def print_top_20_percent_guests(registration_log):
-    enter(registration_log.getGuestsByMostEvents()[:int(len(registration_log.getGuestsByMostEvents())*0.2)])
+    place = 1
+    try:
+        guests = registration_log.getGuestsByMostEvents()[:int(len(registration_log.getGuestsByMostEvents())*0.2)]
+    except TypeError:
+        enter("Nu exista destui invitati")
+        return
+    for guest in guests:
+        print(f"{place}) {guest}: {guests[guest]}")
+        place += 1
+    enter()
 
 
 def help_menu():
