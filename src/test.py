@@ -204,3 +204,92 @@ def test_top_events():
         ["'descriere4'", 0],
         ["'descriere5'", 0],
     ]
+
+
+
+# File tests
+def test_save_events_to_csv():
+    with open("data/test.csv", "w") as file:
+        file.write("")
+
+    event_list = []
+    add_event(date(2023, 12, 20), time(12, 30), "'Olimpiada de sah'", event_list)
+
+    save_events_to_csv("data/test.csv", event_list)
+
+    with open("data/test.csv", "r") as file:
+        lines = file.readlines()
+        assert lines[1] == f"{event_list[0].getEventId()},2023-12-20,12:30:00,'Olimpiada de sah'\n"
+
+
+def test_save_guests_to_csv():
+    with open("data/test.csv", "w") as file:
+        file.write("")
+
+    guest_list = []
+    add_guest("Alin", "Strada Plopilor, nr.1", guest_list)
+
+    save_guests_to_csv("data/test.csv", guest_list)
+
+    with open("data/test.csv", "r") as file:
+        lines = file.readlines()
+        assert lines[1] == f"{guest_list[0].getGuestId()},Alin,Strada Plopilor, nr.1\n"
+
+
+def test_save_logs_to_csv():
+    with open("data/test.csv", "w") as file:
+        file.write("")
+
+    guest_list = []
+    add_guest("Alin", "Strada Plopilor, nr.1", guest_list)
+
+    event_list = []
+    add_event(date(2023, 12, 20), time(12, 30), "'Olimpiada de sah'", event_list)
+
+    log = RegistrationLog()
+    log.register(guest_list[0], event_list[0])
+
+    save_logs_to_csv("data/test.csv", log)
+
+    with open("data/test.csv", "r") as file:
+        lines = file.readlines()
+        assert lines[1] == f"{guest_list[0].getGuestId()},{event_list[0].getEventId()}\n"
+
+
+def test_get_guests_from_csv():
+    with open("data/test.csv", "w") as file:
+        file.write("id,name,address\n1,Alin,Strada Plopilor nr.1\n")
+
+    guest_list = get_guests_from_csv("data/test.csv")
+
+    assert guest_list[0].getGuestId() == "1"
+    assert guest_list[0].getGuestName() == "Alin"
+    assert guest_list[0].getGuestAddress() == "Strada Plopilor nr.1"
+
+
+def test_get_events_from_csv():
+    with open ("data/test.csv", "w") as file:
+        file.write("id,date,time,description\n1,2023-12-20,12:30:00,'Olimpiada de sah'\n")
+    
+    event_list = get_events_from_csv("data/test.csv")
+
+    assert event_list[0].getEventId() == "1"
+    assert event_list[0].getEventDate() == date(2023, 12, 20)
+    assert event_list[0].getEventTime() == time(12, 30)
+    assert event_list[0].getEventDescription() == "'Olimpiada de sah'"
+
+
+def test_get_logs_from_csv():
+    guest_list = []
+    add_guest("Alin", "Strada Plopilor, nr.1", guest_list)
+
+    event_list = []
+    add_event(date(2023, 12, 20), time(12, 30), "'Olimpiada de sah'", event_list)
+
+    with open("data/test.csv", "w") as file:
+        file.write(f"guestId,eventId\n{guest_list[0].getGuestId()},{event_list[0].getEventId()}\n")
+
+    logs = get_logs_from_csv("data/test.csv", guest_list, event_list)
+
+    assert logs.getLogs()[0].getGuest().getGuestName() == "Alin"
+    assert logs.getLogs()[0].getEvent().getEventDescription() == "'Olimpiada de sah'"
