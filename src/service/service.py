@@ -1,4 +1,5 @@
 from domain import Event, Guest, Registration
+from utils import quicksort
 
 class Service:
     def __init__(self, repository):
@@ -71,7 +72,7 @@ class Service:
         for registration in self.repo.registrations:
             if registration.guest_id == guest_id:
                 guest_events.append(self.repo.find_event(registration.event_id))
-        guest_events.sort(key=lambda event: (event.description, event.date))
+        guest_events = quicksort(guest_events, key=lambda event: (event.description, event.date))
         return guest_events
 
     def guest_number_of_registrations(self, guest_id):
@@ -85,7 +86,7 @@ class Service:
         guests = []
         for guest in self.repo.guests:
             guests.append(guest)
-        guests.sort(key=lambda guest: self.guest_number_of_registrations(guest.id_), reverse=True)
+        guests = quicksort(guests, key=lambda guest: self.guest_number_of_registrations(guest.id_), reverse=True)
         return {guest.name: self.guest_number_of_registrations(guest.id_) for guest in guests}
 
     def event_number_of_registrations(self, event_id):
@@ -96,9 +97,26 @@ class Service:
         return num_of_registrations
 
     def sort_events_by_registrations(self):
+        """
+        Sortează evenimentele din depozit în funcție de numărul de înscrieri.
+
+        Args:
+        - repository: Depozitul de evenimente, invitat și înscrieri.
+
+        Returns:
+        - dict: Un dicționar conținând primele 20% din evenimentele sortate în ordine descrescătoare
+        în funcție de numărul de înscrieri.
+
+        Complexity:
+        - Timp: O(n log n), unde n este numărul de evenimente din depozit. Funcția parcurge toate
+        evenimentele pentru a crea o listă și apoi efectuează o operație de sortare asupra acesteia
+        folosind metoda sort, care are o complexitate de O(n log n). În final, funcția creează
+        un dicționar bazat pe lista sortată, cu o complexitate de O(n). Astfel, complexitatea totală
+        este dominată de operația de sortare.
+        """
         events = []
         for event in self.repo.events:
             events.append(event)
-        events.sort(key=lambda event: self.event_number_of_registrations(event.id_), reverse=True)
+        events = quicksort(events, key=lambda event: self.event_number_of_registrations(event.id_), reverse=True)
         events = events[:len(events)//5]
         return {event.description: self.event_number_of_registrations(event.id_) for event in events}

@@ -70,3 +70,25 @@ def raport_input():
 
 def enter(msg=""):
     input(f"{msg}Press ENTER to continue.")
+
+def quicksort(arr, key=lambda x: x, reverse=False):
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[len(arr) // 2]
+        left = [x for x in arr if key(x) < key(pivot)]
+        middle = [x for x in arr if key(x) == key(pivot)]
+        right = [x for x in arr if key(x) > key(pivot)]
+        if reverse:
+            return quicksort(right, key, reverse) + middle + quicksort(left, key, reverse)
+        else:
+            return quicksort(left, key, reverse) + middle + quicksort(right, key, reverse)
+
+def gnome_sort(arr, key=lambda x: x, reverse=False, index=0):
+    if index >= len(arr) - 1:
+        return arr if not reverse else arr[::-1]
+    if key(arr[index]) > key(arr[index + 1]):
+        arr[index], arr[index + 1] = arr[index + 1], arr[index]
+        if index > 0:
+            return gnome_sort(arr, key, reverse, index - 1)
+    return gnome_sort(arr, key, reverse, index + 1)
