@@ -23,8 +23,8 @@ class Controller:
         event_description = utils.description_input(update=True)
         try:
             self.service.update_event(event_id, event_date, event_time, event_description)
-        except AttributeError:
-            utils.enter("Event not found.")
+        except ValueError as e:
+            utils.enter(str(e))
         else:
             utils.enter("Event updated.")
 
@@ -32,8 +32,8 @@ class Controller:
         event_id = utils.id_input()
         try:
             self.service.delete_event(event_id)
-        except AttributeError:
-            utils.enter("Event not found.")
+        except ValueError as e:
+            utils.enter(str(e))
         else:
             utils.enter("Event deleted.")
 
@@ -49,8 +49,8 @@ class Controller:
         guest_address = utils.address_input(update=True)
         try:
             self.service.update_guest(guest_id, guest_name, guest_address)
-        except AttributeError:
-            utils.enter("Guest not found.")
+        except ValueError as e:
+            utils.enter(str(e))
         else:
             utils.enter("Guest updated.")
 
@@ -58,8 +58,8 @@ class Controller:
         guest_id = utils.id_input()
         try:
             self.service.delete_guest(guest_id)
-        except AttributeError:
-            utils.enter("Guest not found.")
+        except ValueError as e:
+            utils.enter(str(e))
         else:
             utils.enter("Guest deleted.")
     

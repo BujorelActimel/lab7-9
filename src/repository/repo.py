@@ -110,16 +110,16 @@ class Repo:
         for event in self.events:
             if event.id_ == event_id:
                 return event
-        return None
+        raise ValueError("Event ID not found.")
 
     def find_guest(self, guest_id):
         for guest in self.guests:
             if guest.id_ == guest_id:
                 return guest
-        return None
+        raise ValueError("Guest ID not found.")
 
     def find_registration(self, registration_id):
         for registration in self.registrations:
             if registration.id_ == registration_id:
                 return registration
-        return None
+        raise ValueError("Registration ID not found.")

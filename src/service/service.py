@@ -36,8 +36,14 @@ class Service:
 
     def update_guest(self, guest_id, guest_name, guest_address):
         guest = self.repo.find_guest(guest_id)
-        guest.name = guest_name
-        guest.address = guest_address
+        if not guest_name:
+            pass
+        else:
+            guest.name = guest_name
+        if not guest_address:
+            pass
+        else:
+            guest.address = guest_address
 
     def delete_guest(self, guest_id):
         guest = self.repo.find_guest(guest_id)
