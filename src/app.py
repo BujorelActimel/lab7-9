@@ -3,9 +3,9 @@ from repository import Repo
 
 def main():
     repository = Repo(
-        "data/events.csv", 
-        "data/guests.csv", 
-        "data/logs.csv",
+        "../data/events.csv", 
+        "../data/guests.csv", 
+        "../data/logs.csv",
     )
     app = AppUI(repository)
     app.mainloop()

@@ -8,7 +8,7 @@ def setup_function():
     guest3 = Guest("Jane Doe", "123 Main St.", id_ = 3)
 
 def test_init():
-    assert guest1.id == 1
+    assert guest1.id_ == 1
     assert guest1.name == "John Doe"
     assert guest1.address == "123 Main St."
 
@@ -18,7 +18,7 @@ def test_eq():
     assert guest1 != guest3
 
 def test_getters():
-    assert guest1.id == 1
+    assert guest1.id_ == 1
     assert guest1.name == "John Doe"
     assert guest1.address == "123 Main St."
 
