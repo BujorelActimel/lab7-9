@@ -119,7 +119,42 @@ class Controller:
         for registration in registrations:
             print(registration)
         utils.enter()
-    
+
+    def raport(self):
+        raport_number = utils.raport_input()
+        if raport_number == 1:
+            guest_id = utils.id_input("Guest ")
+            results = self.service.sort_guest_events_by_description_and_date(guest_id)
+            if not results:
+                utils.enter("No events.")
+                return
+            guest_name = self.service.repo.find_guest(guest_id).name
+            print(f"{guest_name}'s events:")
+            for event in results:
+                print(f"   {event.description} - {event.date} {event.time}")
+            utils.enter("\n")
+
+        elif raport_number == 2:
+            results = self.service.sort_guests_by_registrations()
+            if not results:
+                utils.enter("No guests.")
+                return
+            print("Guests:")
+            for guest in results:
+                print(f"   {guest} - {results[guest]}")
+            utils.enter("\n")
+
+        elif raport_number == 3:
+            results = self.service.sort_events_by_registrations()
+            if not results:
+                utils.enter("No events.")
+                return
+            print("First 20% Events:")
+            for event in results:
+                print(f"   {event} - {results[event]}")
+            utils.enter("\n")
+        
+
     def exit(self):
         os.system("cls")
         self.service.repo.save_data()

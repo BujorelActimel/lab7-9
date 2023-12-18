@@ -44,3 +44,24 @@ def test_add_guest(setup_test_files):
     assert guest.id_ == 4
     assert guest.name == 'Test guest'
     assert guest.address == 'test address'
+
+# def test_sort_guest_events_by_description_and_date(setup_test_files):
+#     repo = Repo(
+#         '../data/test_data/events.csv', 
+#         '../data/test_data/guests.csv', 
+#         '../data/test_data/logs.csv',
+#     )
+#     service = Service(repo)
+#     service.add_guest('Test guest', 'test address')
+#     assert repo.guests[0].id_ == 4
+#     service.add_event('2021-01-01', '12:00', 'Test event2')
+#     assert repo.events[0].id_ == 4
+#     service.add_event('2023-01-01', '12:00', 'Test event1')
+#     assert repo.events[1].id_ == 5
+#     service.add_event('2023-02-01', '12:00', 'Test event1')
+#     assert repo.events[2].id_ == 6
+#     service.register(4, 4)
+#     service.register(4, 5)
+#     service.register(4, 6)
+#     assert service.sort_guest_events_by_description_and_date(4) == [
+#     ]

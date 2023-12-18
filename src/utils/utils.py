@@ -3,7 +3,7 @@ import datetime
 def id_input(msg=""):
     while True:
         try:
-            id_ = int(input(f"{msg}ID: "))
+            id_ = int(input(f"{msg}ID: ").strip())
             return id_
         except ValueError:
             print("ID must be an integer.")
@@ -57,5 +57,16 @@ def description_input(update=False):
             continue
         return description
 
+def raport_input():
+    while True:
+        try:
+            raport = int(input("Raport: ").strip())
+        except ValueError:
+            print("Raport must be an integer.")
+        if raport not in range(1, 4):
+            print("Invalid raport.")
+            continue
+        return raport
+
 def enter(msg=""):
-    input(f"{msg} Press ENTER to continue.")
+    input(f"{msg}Press ENTER to continue.")
