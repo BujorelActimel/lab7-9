@@ -80,6 +80,26 @@ class Controller:
         for guest in guests:
             print(guest)
         utils.enter()
+
+    def search_event(self):
+        event_id = utils.id_input()
+        try:
+            event = self.service.repo.find_event(event_id)
+        except ValueError as e:
+            utils.enter(str(e))
+            return
+        print(event)
+        utils.enter()
+
+    def search_guest(self):
+        guest_id = utils.id_input()
+        try:
+            guest = self.service.repo.find_guest(guest_id)
+        except ValueError as e:
+            utils.enter(str(e))
+            return
+        print(guest)
+        utils.enter()
     
     def exit(self):
         os.system("cls")
