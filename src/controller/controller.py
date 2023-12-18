@@ -18,9 +18,9 @@ class Controller:
 
     def update_event(self):
         event_id = utils.id_input()
-        event_date = utils.date_input()
-        event_time = utils.time_input()
-        event_description = utils.description_input()
+        event_date = utils.date_input(update=True)
+        event_time = utils.time_input(update=True)
+        event_description = utils.description_input(update=True)
         try:
             self.service.update_event(event_id, event_date, event_time, event_description)
         except AttributeError:
@@ -45,8 +45,8 @@ class Controller:
     
     def update_guest(self):
         guest_id = utils.id_input()
-        guest_name = utils.name_input()
-        guest_address = utils.address_input()
+        guest_name = utils.name_input(update=True)
+        guest_address = utils.address_input(update=True)
         try:
             self.service.update_guest(guest_id, guest_name, guest_address)
         except AttributeError:

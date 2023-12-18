@@ -13,9 +13,18 @@ class Service:
 
     def update_event(self, event_id, event_date, event_time, event_description):
         event = self.repo.find_event(event_id)
-        event.date = event_date
-        event.time = event_time
-        event.description = event_description
+        if not event_date:
+            pass
+        else:
+            event.date = event_date
+        if not event_time:
+            pass
+        else:
+            event.time = event_time
+        if not event_description:
+            pass
+        else:
+            event.description = event_description
 
     def delete_event(self, event_id):
         event_to_delete = self.repo.find_event(event_id)
