@@ -100,6 +100,25 @@ class Controller:
             return
         print(guest)
         utils.enter()
+
+    def register(self):
+        guest_id = utils.id_input("Guest ")
+        event_id = utils.id_input("Event ")
+        try:
+            self.service.register(guest_id, event_id)
+        except ValueError as e:
+            utils.enter(str(e))
+        else:
+            utils.enter("Registration successful.")
+
+    def view_registrations(self):
+        registrations = self.service.repo.registrations
+        if not registrations:
+            utils.enter("No registrations.")
+            return
+        for registration in registrations:
+            print(registration)
+        utils.enter()
     
     def exit(self):
         os.system("cls")

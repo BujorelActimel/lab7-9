@@ -5,7 +5,7 @@ class Registration:
             Registration.id_counter += 1
             self._id = Registration.id_counter
         else:
-            Registration.id_counter = id_ + 1
+            Registration.id_counter = id_
             self._id = id_
         self._guest_id = guest_id
         self._event_id = event_id

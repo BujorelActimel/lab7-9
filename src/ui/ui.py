@@ -48,6 +48,10 @@ class AppUI:
                     self.controller.search_event()
                 case 10:
                     self.controller.search_guest()
+                case 11:
+                    self.controller.register()
+                case 12:
+                    self.controller.view_registrations()
                 case 0:
                     self.controller.exit()
                     return
@@ -64,11 +68,13 @@ class AppUI:
     8. View guests
     9. Search event
     10. Search guest
+    11. Register
+    12. View registrations
     0. Exit
     """)
 
     def get_menu_selection(self):
-        valid_selections = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        valid_selections = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         while True:
             try:
                 selection = int(input("Enter selection: "))

@@ -1,9 +1,9 @@
 import datetime
 
-def id_input():
+def id_input(msg=""):
     while True:
         try:
-            id_ = int(input("ID: "))
+            id_ = int(input(f"{msg}ID: "))
             return id_
         except ValueError:
             print("ID must be an integer.")

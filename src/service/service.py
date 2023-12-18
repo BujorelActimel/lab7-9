@@ -49,3 +49,19 @@ class Service:
         guest = self.repo.find_guest(guest_id)
         self.repo.guests.remove(guest)
         Guest.id_counter -= 1
+
+    def register(self, guest_id, event_id):
+        try:
+            self.repo.find_guest(guest_id)
+        except ValueError:
+            raise ValueError("Guest not found.")
+        try:
+            self.repo.find_event(event_id)
+        except ValueError:
+            raise ValueError("Event not found.")
+
+        for registration in self.repo.registrations:
+            if registration.guest_id == guest_id and registration.event_id == event_id:
+                raise ValueError("Guest already registered to event.")
+
+        self.repo.registrations.append(Registration(guest_id, event_id))
