@@ -63,32 +63,33 @@ def raport_input():
             raport = int(input("Raport: ").strip())
         except ValueError:
             print("Raport must be an integer.")
-        if raport not in range(1, 4):
-            print("Invalid raport.")
-            continue
-        return raport
+        else:
+            if raport not in range(1, 4):
+                print("Invalid raport.")
+                continue
+            return raport
 
 def enter(msg=""):
     input(f"{msg}Press ENTER to continue.")
 
-def quicksort(arr, key=lambda x: x, reverse=False):
+def quicksort(arr, key=lambda x: x, cmp=lambda x, y: (x > y) - (x < y), reverse=False):
     if len(arr) <= 1:
         return arr
     else:
         pivot = arr[len(arr) // 2]
-        left = [x for x in arr if key(x) < key(pivot)]
-        middle = [x for x in arr if key(x) == key(pivot)]
-        right = [x for x in arr if key(x) > key(pivot)]
+        left = [x for x in arr if cmp(key(x), key(pivot)) < 0]
+        middle = [x for x in arr if cmp(key(x), key(pivot)) == 0]
+        right = [x for x in arr if cmp(key(x), key(pivot)) > 0]
         if reverse:
-            return quicksort(right, key, reverse) + middle + quicksort(left, key, reverse)
+            return quicksort(right, key, cmp, reverse) + middle + quicksort(left, key, cmp, reverse)
         else:
-            return quicksort(left, key, reverse) + middle + quicksort(right, key, reverse)
+            return quicksort(left, key, cmp, reverse) + middle + quicksort(right, key, cmp, reverse)
 
-def gnome_sort(arr, key=lambda x: x, reverse=False, index=0):
+def gnome_sort(arr, key=lambda x: x, reverse=False, index=0, cmp=lambda x, y: x < y):
     if index >= len(arr) - 1:
         return arr if not reverse else arr[::-1]
-    if key(arr[index]) > key(arr[index + 1]):
+    if cmp(key(arr[index + 1]), key(arr[index])):
         arr[index], arr[index + 1] = arr[index + 1], arr[index]
         if index > 0:
-            return gnome_sort(arr, key, reverse, index - 1)
-    return gnome_sort(arr, key, reverse, index + 1)
+            return gnome_sort(arr, key, reverse, index - 1, cmp)
+    return gnome_sort(arr, key, reverse, index + 1, cmp)
